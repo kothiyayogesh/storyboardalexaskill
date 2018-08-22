@@ -9,5 +9,4 @@ wheel==0.24.0
 jsonify==0.5
 keras==2.1.4
 tensorflow==1.8.0
-gcc
 h5py==2.8.0
