@@ -10,4 +10,3 @@ jsonify==0.5
 keras==2.1.4
 tensorflow==1.8.0
 h5py==2.5.0
-cython==0.28.5
