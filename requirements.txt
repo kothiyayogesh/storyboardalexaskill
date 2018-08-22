@@ -1,0 +1,11 @@
+Flask==1.0.2
+Flask-Ask==0.9.7
+gunicorn==19.4.5
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+Werkzeug==0.11.5
+wheel==0.24.0
+jsonify==0.5
+keras==2.1.4
+tensorflow==1.8.0
