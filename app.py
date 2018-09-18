@@ -8,7 +8,7 @@ from keras.preprocessing.sequence import pad_sequences
 #from random import randint
 import tensorflow as tf
 import os
-graph = None
+#graph = None
 MODEL_FILE_NAME = 'model_test.h5'
 TOKENIZER_FILE_NAME = 'tokenizer_test.pkl'
 modelObj = None
@@ -16,31 +16,28 @@ tokenizerObj = None
 
 # generate a sequence from a language model
 def generate_seq(seq_length, seed_text, n_words):
-    global graph
-    if (graph) :
-        with graph.as_default():
-            result = list()
-            in_text = seed_text
-            # generate a fixed number of words
-            for _ in range(n_words):
-                # encode the text as integer
-                encoded = tokenizerObj.texts_to_sequences([in_text])[0]
-                # truncate sequences to a fixed length
-                encoded = pad_sequences([encoded], maxlen=seq_length, truncating='pre')
-                # predict probabilities for each word
-                yhat = modelObj.predict_classes(encoded, verbose=0)
-                # map predicted word index to word
-                out_word = ''
-                for word, index in tokenizerObj.word_index.items():
-                    if index == yhat:
-                        out_word = word
-                        break
-                # append to input
-                in_text += ' ' + out_word
-                result.append(out_word)
-            return ' '.join(result)
-    else :
-        return ''
+    #global graph
+    with graph.as_default():
+        result = list()
+        in_text = seed_text
+        # generate a fixed number of words
+        for _ in range(n_words):
+            # encode the text as integer
+            encoded = tokenizerObj.texts_to_sequences([in_text])[0]
+            # truncate sequences to a fixed length
+            encoded = pad_sequences([encoded], maxlen=seq_length, truncating='pre')
+            # predict probabilities for each word
+            yhat = modelObj.predict_classes(encoded, verbose=0)
+            # map predicted word index to word
+            out_word = ''
+            for word, index in tokenizerObj.word_index.items():
+                if index == yhat:
+                    out_word = word
+                    break
+            # append to input
+            in_text += ' ' + out_word
+            result.append(out_word)
+        return ' '.join(result)
 
 app = Flask(__name__)
 
