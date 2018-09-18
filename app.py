@@ -13,8 +13,32 @@ TOKENIZER_FILE_NAME = 'tokenizer_test.pkl'
 modelObj = None
 tokenizerObj = None
 
+
+def loadModel(modelFileName) :
+    # load the model
+    return load_model(modelFileName)
+
+def loadTokenizer(tokenizerFileName) :
+    # load the tokenizer
+    return load(open(tokenizerFileName, 'rb'))
+
+try:
+    modelObj = loadModel(MODEL_FILE_NAME)
+    print('Model loaded')
+    tokenizerObj = loadTokenizer(TOKENIZER_FILE_NAME)
+    print('Tokenizer loaded')
+    graph = tf.get_default_graph()
+
+except Exception as e:
+    print('No model here')
+    print('Train first')
+    print(e)
+    modelObj = None
+    tokenizerObj = None
+
 # generate a sequence from a language model
 def generate_seq(seq_length, seed_text, n_words):
+    global graph
     with graph.as_default():
         result = list()
         in_text = seed_text
@@ -47,15 +71,6 @@ def index():
     data['data'] = prediction
     return json.dumps(data)
 
-def loadModel(modelFileName) :
-    # load the model
-    return load_model(modelFileName)
-
-def loadTokenizer(tokenizerFileName) :
-    # load the tokenizer
-    return load(open(tokenizerFileName, 'rb'))
-
-
 def predict(seed_text) :
     seq_length = 5
     generated = generate_seq(seq_length, seed_text, 2)
@@ -64,17 +79,4 @@ def predict(seed_text) :
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    try:
-        modelObj = loadModel(MODEL_FILE_NAME)
-        print('Model loaded')
-        tokenizerObj = loadTokenizer(TOKENIZER_FILE_NAME)
-        print('Tokenizer loaded')
-        graph = tf.get_default_graph()
-
-    except Exception as e:
-        print('No model here')
-        print('Train first')
-        print(e)
-        modelObj = None
-        tokenizerObj = None
     app.run(debug=True, port=port)
