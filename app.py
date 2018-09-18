@@ -6,6 +6,7 @@ from pickle import load
 from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras import backend as K
+import os
 
 # generate a sequence from a language model
 def generate_seq(model, tokenizer, seq_length, seed_text, n_words):
@@ -58,4 +59,5 @@ def predict(seed_text) :
     return generated
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, use_reloader=True,port=port)
