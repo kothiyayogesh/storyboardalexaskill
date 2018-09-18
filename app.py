@@ -8,15 +8,15 @@ from keras.preprocessing.sequence import pad_sequences
 #from random import randint
 import tensorflow as tf
 import os
-
+graph = None
 MODEL_FILE_NAME = 'model_test.h5'
 TOKENIZER_FILE_NAME = 'tokenizer_test.pkl'
 modelObj = None
 tokenizerObj = None
-global graph
 
 # generate a sequence from a language model
 def generate_seq(seq_length, seed_text, n_words):
+    global graph
     with graph.as_default():
         result = list()
         in_text = seed_text
