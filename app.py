@@ -15,7 +15,6 @@ tokenizerObj = None
 
 # generate a sequence from a language model
 def generate_seq(seq_length, seed_text, n_words):
-    global graph
     with graph.as_default():
         result = list()
         in_text = seed_text
