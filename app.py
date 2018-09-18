@@ -33,7 +33,6 @@ def generate_seq(model, tokenizer, seq_length, seed_text, n_words):
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
-
 def index():
     payload = json.loads(request.get_data().decode('utf-8'))
     prediction = predict(payload['text'])
@@ -59,4 +58,4 @@ def predict(seed_text) :
     return generated
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, use_reloader=True)
